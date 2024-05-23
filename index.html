@@ -125,6 +125,7 @@
             height: 250px;
             position: relative;
         }
+        .atm .screen .image-container iframe, 
         .atm .screen .image-container img {
             width: 100%;
             height: 100%;
@@ -168,7 +169,7 @@
             bottom: 0;
         }
     </style>
-    <title>Nintendo-style ATM</title>
+    <title>Piggybancc ATM</title>
 </head>
 <body>
     <div class="navbar">
@@ -182,7 +183,8 @@
             </div>
             <div class="screen">
                 <div class="image-container">
-                    <img id="oink" src="./oink.png" alt="Oink" width="250px" height="250px" >
+                    <!-- <img id="oink" src="./oink.png" alt="Oink" width="250px" height="250px" > -->
+                    <iframe id="oink" data-aa='2327092' src='//ad.a-ads.com/2327092?size=250x250'></iframe>
                     <img id="about" src="./about.png" alt="About" width="250px" height="250px" style="display: none;">
                 </div>
                 <div class="click-indicator">
@@ -196,7 +198,7 @@
         </div>
     </div>
     <div class="footer">
-        Copyright piggybancc.github.com, 2024
+        Copyright piggybancc.github.io, 2024
     </div>
     <script>
         document.getElementById('home-button').addEventListener('click', function() {
