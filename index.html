@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+            margin: 0;
+            overflow: hidden;
+            background: #f0f0f0;
+            background-image: url('./back_tiled.webp'); /* Replace with the actual path */
+            background-size: 512px 512px; /* Adjust the size as needed */
+            background-repeat: repeat;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.6); /* Adjust the opacity for the overlay */
+            z-index: -1;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #000; /* Black background */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .navbar .brand {
+            color: #FFA700; /* Bright red for Nintendo theme */
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .navbar .menu a {
+            color: #FFA700; /* White text */
+            font-size: 16px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .atm-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .atm {
+            width: 325px;
+            height: 475px;
+            background-color: #F8F8F8; /* Light gray background */
+            border: 5px solid #000; /* Bold black border */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+            background: #F8F8F8;
+            border-radius: 10px;
+        }
+        .atm .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFA700; /* Bright red for Nintendo theme */
+            text-align: center;
+            margin-bottom: 10px;
+            background: #FFF;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            border-bottom: 4px solid #000; /* Black bottom border */
+        }
+        .atm .panel {
+            width: 100%;
+            height: 50px;
+            background-color: #FFF; /* White background */
+            color: #000; /* Black text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #000; /* Black border */
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px; /* Spacing below the balance panel */
+            box-sizing: border-box;
+            text-transform: uppercase;
+            border-radius: 5px;
+        }
+        .atm .screen {
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* Black background */
+            color: #00FF00; /* Green text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #000; /* Black border */
+            font-size: 18px;
+            margin-bottom: 10px; /* Spacing below the screen */
+            box-sizing: border-box;
+            text-transform: uppercase;
+            border-radius: 5px;
+            box-shadow: inset 0 0 15px rgba(255, 255, 0, 0.7), inset 0 0 15px rgba(255, 255, 0, 0.5); /* Internal glow effect */
+            position: relative; /* To ensure the inner container is positioned properly */
+            padding: 10px;
+        }
+        .atm .screen .image-container {
+            width: 250px;
+            height: 250px;
+            position: relative;
+        }
+        .atm .screen .image-container img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .atm .screen .click-indicator {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .atm .screen .click-indicator button {
+            width: 100%;
+            background-color: #FFA700;
+            border: 2px solid #111;
+            color: #000;
+            font-size: 14px;
+            text-transform: uppercase;
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .atm .screen .click-indicator .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .atm .screen .click-indicator .row button {
+            width: 48%; /* Adjust to fit two buttons in a row with spacing */
+        }
+        .footer {
+            width: 100%;
+            background-color: #000; /* Black background */
+            color: #FFF; /* White text */
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+    <title>Nintendo-style ATM</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="brand">PiggyBancc</div>
+        <!-- <div class="menu"><a href="./about.html">About</a></div> -->
+    </div>
+    <div class="atm-container">
+        <div class="atm">
+            <div class="panel">
+                PIGGYBANCC ATM
+            </div>
+            <div class="screen">
+                <div class="image-container">
+                    <img id="oink" src="./oink.png" alt="Oink" width="250px" height="250px" >
+                    <img id="about" src="./about.png" alt="About" width="250px" height="250px" style="display: none;">
+                </div>
+                <div class="click-indicator">
+                    <button id="balance-button">CHECK BALANCE</button>
+                    <div class="row">
+                        <button id="home-button"><i class="fas fa-home"></i></button>
+                        <button id="info-button"><i class="fa-solid fa-circle-info"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright piggybancc.github.com, 2024
+    </div>
+    <script>
+        document.getElementById('home-button').addEventListener('click', function() {
+            document.getElementById('oink').style.display = 'block';
+            document.getElementById('about').style.display = 'none';
+        });
+
+        document.getElementById('info-button').addEventListener('click', function() {
+            document.getElementById('oink').style.display = 'none';
+            document.getElementById('about').style.display = 'block';
+        });
+        document.getElementById('balance-button').addEventListener('click', function() {
+            window.open('https://www.blockchain.com/explorer/addresses/btc/1GbToFePSuQvhArC1VxsxEKQR3TUmvigAo', '_blank');
+        });
+    </script>
+</body>
+</html>
